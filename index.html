@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+        <title>ScoreBoard</title>
+        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+        <style>
+            body{
+                text-align : center;
+                width:100%;
+                height:100%;
+                padding: 0;
+                margin : 0;
+                background-image: url(back.jpg);
+                background-size: cover;
+                color: #FFF;
+            }
+            #clock{
+                font-family: "Impact";
+                font-size : 350%;
+                width : 100%;
+            }
+            #timer_clock{
+                top:40%;
+                width : 100%;
+            }
+            .board{
+                margin-top:1em; 
+                margin-left:5%; 
+                padding-top:4em; 
+                padding-bottom:2em; 
+                width:90%;
+                background:rgba(255, 255, 255, 0.8);
+                box-shadow: 15px 15px 20px 0px white;
+            }
+            .score {
+                width: 400px;
+                font-size: 2500%;
+                font-family: "Impact";
+                vertical-align: middle;
+                color: #FFF;
+            }
+            .inning {
+                width: 200px;
+                font-size: 1500%;
+                font-family: "Impact";
+                vertical-align: text-bottom;
+                color: #FFF;
+            }
+            .align-style {
+                background : rgba(0,0,0, 0.8);
+                display: inline-block;
+                margin-right: 0.1em;
+                margin-left: 0.1em;
+            }
+            @media screen and (max-width: 1025px) {
+                .score {
+                    width: 200px;
+                    font-size: 1500%;
+                }
+                .inning {
+                    width: 100px;
+                    font-size: 500%;
+                }
+            }
+            @media screen and (max-width: 1601px) {
+                .score {
+                    width: 300px;
+                    font-size: 2000%;
+                }
+                .inning {
+                    width: 200px;
+                    font-size: 800%;
+                }
+            }
+        </style>
+        <script>
+
+            function curTime() {
+                $("#clock").text("00:00:00");
+                setInterval(function () {
+                        var curDate = new Date();
+                        var hours = curDate.getHours();
+                        var minutes = curDate.getMinutes();
+                        var seconds = curDate.getSeconds();
+                        var time = '';
+                        time += ((hours <10)?  '0' : '' )+hours;
+                        time += ((minutes <10)? ':0' : ':')+minutes;
+                        time += ((seconds <10)? '<span class="sec-style">:0' : '<span class="sec-style">:')+seconds+'</span>';
+                        $("#clock").html(time);
+                }, 1000);   
+            }
+            $(function(){
+                var ngui, nwin;
+                if(typeof require !== 'undefined'){
+                   ngui = require('nw.gui');
+                   nwin = ngui.Window.get();
+                   nwin.enterFullscreen();
+                }
+                curTime();
+                $(document).keydown(function(e){
+                    if ( e.keyCode === 65 ) { /*a*/ 
+                        var score = parseInt($('#LS').text());
+                        score += 1;
+                        $('#LS').text(score);
+                    }
+                    if ( e.keyCode === 90 ) { /*z*/ 
+                        var score = parseInt($('#LS').text());
+                        if (score === 0) {
+                            return 0;
+                        }
+                        score -= 1;
+                        $('#LS').text(score);
+                    }
+                    if ( e.keyCode === 87 ) { /*w*/
+                        var score = parseInt($('#LI').text());
+                        score += 1;
+                        $('#LI').text(score);
+                    }
+                    if ( e.keyCode === 83 ) { /*s*/
+                        var score = parseInt($('#LI').text());
+                        if (score === 0) {
+                            return 0;
+                        }
+                        score -= 1;
+                        $('#LI').text(score);
+                    }
+                    if ( e.keyCode === 219 ) { /*[*/
+                        var score = parseInt($('#RI').text());
+                        score += 1;
+                        $('#RI').text(score);
+
+                    }
+                    if ( e.keyCode === 186 ) { /*;*/
+                        var score = parseInt($('#RI').text());
+                        if (score === 0) {
+                            return 0;
+                        }
+                        score -= 1;
+                        $('#RI').text(score);
+
+                    }
+                    if ( e.keyCode === 222 ) { /*'*/
+                        var score = parseInt($('#RS').text());
+                        score += 1;
+                        $('#RS').text(score);
+
+                    }
+                    if ( e.keyCode === 191 ) { /*;*/
+                        var score = parseInt($('#RS').text());
+                        if (score === 0) {
+                            return 0;
+                        }
+                        score -= 1;
+                        $('#RS').text(score);
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        Current Time
+        <div id="clock"></div>
+        <br>
+    Keyborad Down[(A) Left Score ↑, (Z) Left Score ↓, (') Right Score ↑, (/) Right Score ↓]<br>
+    Keyborad Down[(W) Left Inning ↑, (S) Left Inning  ↓, ([) Right Inning ↑, (;) Right Inning ↓]<br>
+        <div class="board">
+            <div id="LS" class="align-style score">0</div>
+            <div id="LI" class="align-style inning">0</div>
+            <div id="RI" class="align-style inning">0</div>
+            <div id="RS" class="align-style score">0</div>
+        </div>  
+    </body>
+</html>
