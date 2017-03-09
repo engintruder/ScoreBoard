@@ -1,5 +1,5 @@
-# Timer
-Current Time And Timer Web Application
+# ScoreBoard
+Current Time And Score Web Application
 
 
 ![screenShot](./screenshot.png) 
